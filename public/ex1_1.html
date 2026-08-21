@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>요청 1</title>
+    </head>
+    <body>
+
+        <div>
+            <p>요청입니다</p>
+        </div>
+
+        <div>
+            <input type="text" id="nameInput">
+            <input type="text" id="ageInput">
+            <input type="text" id="mobileInput">
+
+            <button type="button" id="addButton">추가하기</button>
+        </div>
+
+        <div id="output">
+
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/axios@1.19.0/dist/axios.min.js"></script>
+        <script>
+
+            let nameInput
+            let ageInput
+            let mobileInput
+
+            window.addEventListener('DOMContentLoaded', () => {
+                nameInput = document.querySelector('#nameInput')
+                ageInput = document.querySelector('#ageInput')
+                mobileInput = document.querySelector('#mobileInput')
+
+                output = document.querySelector('#output')
+
+                const addButton = document.querySelector('#addButton')
+                addButton.addEventListener('click', (e) => {
+                    requestPersonAdd()
+                })
+
+            })
+
+            async function requestPersonAdd() {
+                console.log(`request 호출됨`)
+
+                try {
+                    const name = nameInput.value
+                    const age = ageInput.value
+                    const mobile = mobileInput.value
+
+                    const response = await axios({
+                        method: 'post',
+                        url: `http://localhost:7001/add`,
+                        data: {
+                            name: name,
+                            age: age,
+                            mobile: mobile
+                        }
+                    })
+                    console.log(`응답 -> ${JSON.stringify(response.data)}`)
+
+                } catch(err) {
+                    console.error(`에러 -> ${err}`)
+                }
+            }
+
+        </script>
+
+    </body>
+</html>
